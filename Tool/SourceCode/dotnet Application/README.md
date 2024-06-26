@@ -9,6 +9,7 @@ The TRec folder contains the .NET application crucial for the operation of the T
 - **.NET SDK 4.7 or higher**
 - **Java 17.0.7 or above**
 
+
 ## How to Run
 - **File to open:** `TestCase Management.sln`
 - **Steps:**
@@ -17,6 +18,13 @@ The TRec folder contains the .NET application crucial for the operation of the T
   3. The solution contains two main projects:
      - **BusinessLogic Project:** Houses all independent files such as classes and models. This project encapsulates the core functionality and data handling needed for the application.
      - **Console Application:** Primarily contains the application logic used to display recommendations. This project is where the application's user interaction components are managed.
+
+## NuGet Package Prerequisites
+Make sure all the NuGet packages are installed correctly. To check, right-click on the project and click on 'Manage NuGet Packages'. The following NuGet packages are necessary:
+
+- **Newtonsoft.Json**
+- **LibGit2Sharp**
+- **LibGit2Sharp.NativeBinaries**
 
 ## Troubleshooting
 - If you face issues with the application not starting correctly, right-click on the Console Application project in Visual Studio, and select "Set as StartUp Project" to ensure it launches properly when running the solution.
