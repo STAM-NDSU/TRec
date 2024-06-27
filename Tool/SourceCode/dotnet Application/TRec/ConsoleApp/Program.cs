@@ -34,6 +34,38 @@ namespace ConsoleApp
             return filteredList;
         }
 
+        public static bool AreMethodsEqual(string methodCall, string associatedMethod)
+        {
+            // Extract method name and parameters from the associated method
+            var associatedMethodPattern = new System.Text.RegularExpressions.Regex(@"(\w+)\(([\w\.,\s]*)\)");
+            var associatedMethodMatch = associatedMethodPattern.Match(associatedMethod);
+            if (!associatedMethodMatch.Success)
+            {
+                return false;
+            }
+            var associatedMethodName = associatedMethodMatch.Groups[1].Value;
+            var associatedMethodParams = associatedMethodMatch.Groups[2].Value;
+
+            // Extract method name and parameters from the method call
+            var methodCallPattern = new System.Text.RegularExpressions.Regex(@"(\w+)\(([\w\.,\s]*)\)");
+            var methodCallMatch = methodCallPattern.Match(methodCall);
+            if (!methodCallMatch.Success)
+            {
+                return false;
+            }
+            var methodCallName = methodCallMatch.Groups[1].Value;
+            var methodCallParams = methodCallMatch.Groups[2].Value;
+
+            // Split parameters into lists and remove fully qualified names
+            var associatedMethodParamsList = associatedMethodParams.Split(',')
+                .Select(param => param.Trim().Split('.').Last().Trim()).ToList();
+            var methodCallParamsList = methodCallParams.Split(',')
+                .Select(param => param.Trim().Split('.').Last().Trim()).ToList();
+
+            // Compare method names and parameters
+            return (associatedMethodName == methodCallName) &&
+                   (associatedMethodParamsList.SequenceEqual(methodCallParamsList));
+        }
 
         static async Task Main(string[] args)
         {
@@ -111,6 +143,7 @@ namespace ConsoleApp
                     //Dictionary<string, DateTimeOffset> theCommitswithLinks_Dict = new Dictionary<string, DateTimeOffset>();
                     foreach (var theCommit in commits)
                     {
+
                         theCommit.ChangedFiles = theCommit.ChangedFiles.Distinct().ToList();
                         //Differentiating Prod class and Test Class
                         List<string> testClass = new List<string>();
@@ -158,10 +191,14 @@ namespace ConsoleApp
 
                                         foreach (MethodSet theSrcMet in theSourceClass.MethodSets)
                                         {
+                                            if(theSrcMet.SourceMethodName.Contains("T "))
+                                            {
+
+                                            }
 
                                             foreach (var tstMethod in TestMethods)
                                             {
-                                                if (tstMethod.MethodCallsInside.Contains(theSrcMet.SourceMethodName))
+                                                if (tstMethod.MethodCallsInside.Any(x=>AreMethodsEqual(x,theSrcMet.SourceMethodName)))
                                                 {
                                                     theSrcMet.TestMethods.Add(tstMethod);
 

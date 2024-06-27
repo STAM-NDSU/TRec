@@ -245,7 +245,7 @@ namespace ConsoleApp
             return theMethodSets;
         }
 
-        public List<TestMethod> FindChanedMethosSets_Test_Evaluation(JavaFile current, JavaFile Parent, ref bool hasNewMethods)
+        public List<TestMethod> FindChanedMethosSets_Test_Evaluation(JavaFile current, JavaFile Parent)
         {
             List<TestMethod> theMethodSets = new List<TestMethod>();
             foreach (Method theMethod in current.MethodList)
@@ -269,14 +269,10 @@ namespace ConsoleApp
                         theMethodSets.Add(theMethodSet);
                     }
                 }
-                else
-                {
-                    hasNewMethods = true;
-                }
             }
             return theMethodSets;
         }
-        public List<MethodSet> FindChanedMethosSets_Prod_Evaluation(JavaFile current, JavaFile Parent, ref bool hasNewMethods)
+        public List<MethodSet> FindChanedMethosSets_Prod_Evaluation(JavaFile current, JavaFile Parent)
         {
             List<MethodSet> theMethodSets = new List<MethodSet>();
             foreach (Method theMethod in current.MethodList)
@@ -296,10 +292,6 @@ namespace ConsoleApp
                         theMethodSet.SourceMethodName_Raw = theMethod.MethodSignature_Raw;
                         theMethodSets.Add(theMethodSet);
                     }
-                }
-                else
-                {
-                    hasNewMethods = true;
                 }
             }
             return theMethodSets;

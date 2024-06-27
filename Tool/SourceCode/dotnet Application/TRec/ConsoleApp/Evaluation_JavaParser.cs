@@ -92,7 +92,7 @@ namespace ConsoleApp
                                         List<string> calledmethods = new List<string>();
                                         foreach (var theTstMethod in TestMethods)
                                         {
-                                            if (theTstMethod.MethodCallsInside.Any(x => x == theSrcMet.SourceMethodName))
+                                            if (theTstMethod.MethodCallsInside.Any(x => Program.AreMethodsEqual(x,theSrcMet.SourceMethodName)))
                                             {
                                                 calledmethods.Add(theTstMethod.TestMethodName_Raw);
                                             }
@@ -105,7 +105,7 @@ namespace ConsoleApp
                                         evaluationLine.ChangedProductionMethods = theSrcMet.SourceMethodName_Raw;
                                         evaluationLine.TestClass = tstCls;
 
-                                        var changedAndCalled = TestMethods.FindAll(x => x.MethodCallsInside.Any(y => y == theSrcMet.SourceMethodName)).Select(x => x.TestMethodName_Raw).ToList();
+                                        var changedAndCalled = TestMethods.FindAll(x => x.MethodCallsInside.Any(y => Program.AreMethodsEqual(y,theSrcMet.SourceMethodName))).Select(x => x.TestMethodName_Raw).ToList();
                                         evaluationLine.ChangedAndCalled = String.Join("\n", changedAndCalled);
                                         evaluationLine.ChangedTestMethods = String.Join("\n", TestMethods.Select(x => x.TestMethodName_Raw).ToList());
                                         evaluationLine.CalledTestMethods = String.Join("\n", calledmethods);
@@ -253,8 +253,8 @@ namespace ConsoleApp
                     }
                 }
 
-                bool hasNewMethods_Prod = false;
-                bool hasNewMethods_Test = false;
+                bool hasProdMethods = false;
+                bool hasTestMEthods = false;
                 //MasterObject.CurrentProject.theSourceClasses.Clear();
                 foreach (string theFileName in prodClass)
                 {
@@ -266,11 +266,11 @@ namespace ConsoleApp
                     var ParsedFile_Parent = theCommit.ParentCommit?.CommitAST?.theFiles.FirstOrDefault(x => x.FileName == theFileName) ?? null;
                     if (ParsedFile_Parent != null && ParsedFile_current != null)
                     {
-                        theSourceClass.MethodSets = new BusinessLogic().FindChanedMethosSets_Prod_Evaluation(ParsedFile_current, ParsedFile_Parent, ref hasNewMethods_Prod);
-                        if (hasNewMethods_Prod)
-                            break;
+                        theSourceClass.MethodSets = new BusinessLogic().FindChanedMethosSets_Prod_Evaluation(ParsedFile_current, ParsedFile_Parent);
+
                         if (theSourceClass.MethodSets.Count > 0)
                         {
+                            hasProdMethods = true;
                             var tstclsses = testClass.FindAll(x => x.ToLower().Contains(theSourceClass.SourceClassFileNameWithOutExtension.ToLower()));
                             foreach (var tstCls in tstclsses)
                             {
@@ -278,15 +278,15 @@ namespace ConsoleApp
                                 var ParsedFile_Parent_test = theCommit.ParentCommit?.CommitAST?.theFiles.FirstOrDefault(x => x.FileName == tstCls) ?? null;
                                 var TestMethods = new List<TestMethod>();
                                 if (ParsedFile_Parent_test != null && ParsedFile_current_test != null)
-                                    TestMethods = new BusinessLogic().FindChanedMethosSets_Test_Evaluation(ParsedFile_current_test, ParsedFile_Parent_test, ref hasNewMethods_Test);
-                                if (hasNewMethods_Test)
-                                    break;
+                                    TestMethods = new BusinessLogic().FindChanedMethosSets_Test_Evaluation(ParsedFile_current_test, ParsedFile_Parent_test);
+                                if(TestMethods.Count > 0)
+                                    hasTestMEthods=true;
 
                             }
                         }
                     }
                 }
-                if (hasNewMethods_Test == false && hasNewMethods_Prod == false)
+                if (hasProdMethods == true && hasTestMEthods == true)
                 {
                     theEvaluationCommits.Add(theCommit);
                 }
