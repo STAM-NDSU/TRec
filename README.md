@@ -1,14 +1,23 @@
 
-# README for the Data Folder
+# TRec's Artifacts
 
-## Overview
-The Data folder contains datasets related to the evaluation of commits and the extraction of Test-to-Code Traceability (TCT) links. These datasets are essential for analyzing the traceability between production and test code and for assessing the effectiveness of test recommendations provided by the TRec tool.
+The artifact repository for the paper titled:
 
-# README for the Tool Folder
+> <b>TRec: A Regression Test Recommender for Java Projects</b>  
+> _Authors:_ Sai Kiran Bhrugumalla and Ajay Kumar Jha <br>
+> _Conference:_ ICSME'24 (Tool Demo Track)
 
-## Overview
-The Tool folder contains all the necessary software components of the TRec system. This includes the source code and the executable console application that comprises the operational part of TRec.
+In the paper, we proposed a technique and a tool, TRec, for identifying and recommending tests for code changes in CI environments. 
+We evaluated TRec by recommending tests for 1,867 developers' modified methods in 493 commits from three open-source Java projects. 
+This artifact repository contains data and tools used in the study.
 
-## Structure
-- **Source Code folder** - Contains all the development source files of TRec, enabling understanding and enhancement of the system.
-- **TRec folder** - Contains the executable console application for TRec, designed to be directly used for generating test recommendations.
+## Contents:
+The repository contains two main folders:
+
+- The [**Tool**](/Tool/) folder contains TRec, a regression test recommender tool. 
+This folder includes TRec's source code and an executable console application. 
+Please check the ReadMe file in this folder for instructions on using the tool. 
+
+- The [**Data**](/Data/) folder contains TRec's evaluation results.
+  Please check the ReadMe file in this folder for instructions on reading the results.
+
