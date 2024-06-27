@@ -1,6 +1,3 @@
-
-# README
-
 ## Overview
 
 This folder contains datasets related to the evaluation of commits.
