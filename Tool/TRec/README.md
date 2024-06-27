@@ -8,7 +8,7 @@
 - You can download and install the .NET Framework from the official Microsoft website: [Download .NET Framework](https://dotnet.microsoft.com/download/dotnet-framework)
 
 ### Java
-- Ensure that Java version 17.0.7 or higher is installed on your system.
+- Ensure that Java version 21.0.3 or higher is installed on your system.
 - You can download and install the latest version of Java from the official Oracle website: [Download Java](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html)
 
 ### Checking Java Installation
@@ -25,9 +25,9 @@ To verify if Java is installed and to check its version, follow these steps:
 3. If Java is installed correctly, you should see an output similar to this:
 
    ```
-   java version "17.0.7" 2023-04-18 LTS
-   Java(TM) SE Runtime Environment (build 17.0.7+8-LTS-211)
-   Java HotSpot(TM) 64-Bit Server VM (build 17.0.7+8-LTS-211, mixed mode, sharing)
+   java version "21.0.3" 2023-04-18 LTS
+   Java(TM) SE Runtime Environment (build 21.0.3+8-LTS-211)
+   Java HotSpot(TM) 64-Bit Server VM (build 21.0.3+8-LTS-211, mixed mode, sharing)
    ```
 
 4. If you do not see the version information and instead get an error message, follow the steps below to install or configure Java.
@@ -49,7 +49,7 @@ To verify if Java is installed and to check its version, follow these steps:
 2. In the System Properties window, click on the "Environment Variables" button.
 3. In the Environment Variables window, under System variables, click on "New" to add a new system variable.
    - Variable name: `JAVA_HOME`
-   - Variable value: `C:\Program Files\Java\jdk-17.0.7` (Replace this path with the path where Java is installed on your system)
+   - Variable value: `C:\Program Files\Java\jdk-21.0.3` (Replace this path with the path where Java is installed on your system)
 4. Find the `Path` variable in the System variables section, select it, and click on "Edit."
 5. In the Edit Environment Variable window, click on "New" and add the following path:
    - `%JAVA_HOME%\bin`
@@ -76,7 +76,8 @@ To verify if Java is installed and to check its version, follow these steps:
 ### Provide Local Repository Path
 
 1. The tool will prompt for the local repository path.
-2. Example: `C:\Users\saiki\commons-lang`
+2. The project should be cloned using git bash and *not downloaded*, as downloading from Git does not include the commit history.
+3. Example: `C:\Users\saiki\commons-lang`
 
 ### Provide Commit ID
 
@@ -86,7 +87,7 @@ To verify if Java is installed and to check its version, follow these steps:
 ### Initial Analysis (First-time Use)
 
 1. If running the tool for the first time, it will perform an initial analysis.
-2. This process may take a while to complete.
+2. This process may take a while to complete. For reference, analyzing Java projects took the following durations: commons-lang: 3 hours 22 minutes, gson: 37 minutes, and commons-io: 1 hour 48 minutes.
 3. After the initial analysis, the tool will provide the recommendations.
 
 ### Subsequent Runs
@@ -105,9 +106,9 @@ To verify if Java is installed and to check its version, follow these steps:
 - Thank you for using TRec!
 
 ## Using the Pre-processed Database
-
+- if you prefer not to run the application and use the existing data from the three projects: commons-lang, gson, and commons-io
 1. Extract the `DataBase.rar` file.
-2. Replace the existing database folder in the `TRec` folder with the extracted database folder.
+2. Copy/Replace the existing database folder in the `TRec` folder with the extracted database folder.
 
 ## Contact
 

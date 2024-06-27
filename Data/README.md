@@ -3,17 +3,17 @@
 
 ## Overview
 
-This folder contains datasets related to the evaluation of commits in various projects where methods were updated along with both production code and test code. Additionally, it includes datasets defining all the Test-to-Code Traceability (TCT) links extracted from the entire projects.
+This folder contains datasets related to the evaluation of commits.
 
 ## Files and Descriptions
 
 ### AllRecommendations Files
 
-These files contain data where evaluations have been performed on commits involving existing methods that were updated, including changes in both production and test code. They help in analyzing the effectiveness of the recommendations provided by our TRec tool.
+These files contain data where evaluations have been performed on commits involving existing methods that were updated, including changes in both production and test code.
 
-- **CommonsLang_AllRecomendations_Cleaned.csv**: Contains the evaluation data for the Commons Lang project.
-- **CommonsIO_AllRecomendations_Cleaned.csv**: Contains the evaluation data for the Commons IO project.
-- **Gson_AllRecomendations_Cleaned.csv**: Contains the evaluation data for the Gson project.
+- **CommonsLang_AllRecomendations_Cleaned.csv**: Contains the Recommendation data for the Commons Lang project.
+- **CommonsIO_AllRecomendations_Cleaned.csv**: Contains the Recommendation data for the Commons IO project.
+- **Gson_AllRecomendations_Cleaned.csv**: Contains the Recommendation data for the Gson project.
 
 #### Columns Description
 
@@ -27,7 +27,7 @@ These files contain data where evaluations have been performed on commits involv
 - **ChangedAndCalled**: Indicates methods that were changed and also call the production method.
 - **CalledTestMethods**: All methods in the test class that call the production method.
 - **RecommendedTests**: Tests recommended by TRec for the modified production method.
-- **RecommendedIndex**: A relevance or priority index matching the recommended tests with the 'Changed and Called' values.
+- **RecommendedIndex**: Ranking of the Tests. (ChangedAndCalled - RecommendedTests)
 
 ### Links Files
 

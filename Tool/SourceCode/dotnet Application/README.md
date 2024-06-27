@@ -7,7 +7,7 @@ The TRec folder contains the .NET application crucial for the operation of the T
 ## Prerequisites
 - **Visual Studio 2017 or above**
 - **.NET SDK 4.7 or higher**
-- **Java 17.0.7 or above**
+- **Java 21.0.3 or above**
 
 
 ## How to Run

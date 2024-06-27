@@ -13,6 +13,7 @@ This folder contains the source code for applications that are integral to the f
 ### .NET Application - TRec
 - **Location:** `dot net application/TRec`
 - **Description:** This .NET application integrates with the Java Application for Parsing to further process the extracted data. It extracts Test-to-Code Traceability (TCT) links and provides automated recommendations for testing based on changes in code. This application is a key component of the TRec system, linking changes in production code to corresponding tests.
+- Open the dot net application application folder for detailed instructions.
 
 ## Usage
 The Java Application for Parsing should be used to process Java source files, preparing the data for the .NET application. The .NET application (TRec) takes this parsed data to identify and recommend tests, enhancing the efficiency and accuracy of test recommendations in continuous integration environments.
