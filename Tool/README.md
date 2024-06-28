@@ -23,7 +23,7 @@ Please check ReadMe files in this folder and its subfolders for instructions on 
 
 #### Java
 - Ensure that Java version 21.0.3 or higher is installed on your system.
-- You can download and install the latest version of Java from the official Oracle website: [Download Java](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html)
+- You can download and install the latest version of Java from the official Oracle website: [Download Java](https://www.oracle.com/java/technologies/downloads/)
 
 #### Checking Java Installation
 
@@ -50,7 +50,7 @@ To verify if Java is installed and to check its version, follow these steps:
 
 ##### Step 1: Download Java
 
-1. Go to the [Java SE Downloads](https://www.oracle.com/java/technologies/javase-jdk17-downloads.html) page.
+1. Go to the [Java SE Downloads](https://www.oracle.com/java/technologies/downloads/) page.
 2. Download the installer for your operating system.
 
 ##### Step 2: Install Java
