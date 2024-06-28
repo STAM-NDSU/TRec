@@ -1,6 +1,4 @@
 
-# README for Source Code Folder
-
 ## Overview
 This folder contains the source code for applications that are integral to the functioning of the TRec system, designed to enhance traceability and recommendation capabilities in software development environments.
 
