@@ -97,7 +97,7 @@ You can also open the file via a terminal or command prompt.
 #### Provide Commit ID
 
 1. The tool will then ask for the Commit ID for recommendations.
-2. Example: `3c13a07575642aa8ddbb6ab5c75b8da7b2f8e56b`
+2. Example: `f161ff66698bea44784926fc6aa9073d96a00cec`
 
 #### Initial Analysis (First-time Use)
 
@@ -108,14 +108,14 @@ For reference, TRec took 3 hours 22 minutes, 37 minutes, and 1 hour 48 minutes t
 The database size depends on the number of TCT links extracted by the tool.
 Please ensure that the drive has sufficient storage.
 We recommend at least 10GB free space since TRec uses some space for processing commits.
-3. After the initial analysis, the tool will provide the recommendations.
+3. After the initial analysis, the tool provides the recommendations.
 4. You can close the console application by pressing "C".
 
 #### Subsequent Runs
 
-1. You have to start the `ConsoleApp.exe` each time you need a recommendation for a commit.
+1. You have to start/open the `ConsoleApp.exe` each time you need a recommendation for a commit.
 However, for subsequent uses, the tool will skip the initial analysis.
-2. The same inputs will be required, and recommendations will be provided instantly.
+2. TRec takes the same inputs as in the initial analysis and provides recommendations instantly.
 
 
 #### Notes
