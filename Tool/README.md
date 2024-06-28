@@ -90,8 +90,8 @@ You can also open the file via a terminal or command prompt.
 
 #### Provide Local Repository Path
 
-1. The tool will prompt for the local repository path.
-2. The project should be cloned using git bash and *not downloaded*, as downloading from Git does not include the commit history.
+1. The tool will prompt for the local repository path of the project that you want recommendations for.
+2. Note that the project should be cloned using git bash and *not downloaded*, as downloading from Git does not include the commit history.
 3. Example: `C:\Users\saiki\commons-lang`
 
 #### Provide Commit ID
