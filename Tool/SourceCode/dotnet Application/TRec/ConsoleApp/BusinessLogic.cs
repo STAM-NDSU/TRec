@@ -18,8 +18,8 @@ namespace ConsoleApp
         public void CheckoutAndParseforJava()
         {
             //Commits for Recomendation
-            var commitForRecomendation=MasterObject.Commits.FirstOrDefault(x=>x.CommitId==MasterObject.CommitShaForRecomendation);
-            if(commitForRecomendation != null )
+            var commitForRecomendation = MasterObject.Commits.FirstOrDefault(x => x.CommitId == MasterObject.CommitShaForRecomendation);
+            if (commitForRecomendation != null)
             {
                 MasterObject.ValidCommitsForAnalysis.Add(commitForRecomendation);
             }
@@ -94,7 +94,7 @@ namespace ConsoleApp
                                     }
                                 }
                             }
-                            catch(Exception ex)
+                            catch (Exception ex)
                             {
                                 Console.WriteLine(ex.ToString());
                                 throw;
@@ -203,44 +203,45 @@ namespace ConsoleApp
             List<TestMethod> theMethodSets = new List<TestMethod>();
             foreach (Method theMethod in current.MethodList)
             {
-                if (Parent.MethodList.Any(x => x.MethodSignature_Raw == theMethod.MethodSignature_Raw))
-                {
-                    //Existing One,LetsCheck if it is Changed
-                    string currentSnip = theMethod.CodeSnippet;
-                    string parentSnip = Parent.MethodList.FirstOrDefault(x => x.MethodSignature_Raw == theMethod.MethodSignature_Raw).CodeSnippet;
-
-                    if (!currentSnip.Equals(parentSnip))
+                if (theMethod.Annotations.Any(x => x.ToLower().Contains("test")))
+                    if (Parent.MethodList.Any(x => x.MethodSignature_Raw == theMethod.MethodSignature_Raw))
                     {
-                        var theMethodSet = new TestMethod();
-                        theMethodSet.TestMethodSnip = currentSnip;
-                        theMethodSet.TestClasssFileName = current.FileName;
-                        theMethodSet.TestClass_Raw_FileContent_V1 = currentSnip;
-                        theMethodSet.TestClass_Raw_FileContent_V2 = parentSnip;
-                        theMethodSet.TestMethodName = theMethod.MethodSignature;
-                        theMethodSet.TestMethodName_Raw = theMethod.MethodSignature_Raw;
-                        theMethodSet.MethodCallsInside = format(theMethod.MethodCalls);
-                        theMethodSets.Add(theMethodSet);
-                    }
-                }
-                else
-                {
-                    //NewMethod
-                    string currentSnip = theMethod.CodeSnippet;
-                    string parentSnip = "Method Not Found";
+                        //Existing One,LetsCheck if it is Changed
+                        string currentSnip = theMethod.CodeSnippet;
+                        string parentSnip = Parent.MethodList.FirstOrDefault(x => x.MethodSignature_Raw == theMethod.MethodSignature_Raw).CodeSnippet;
 
-                    if (!currentSnip.Equals(parentSnip))
-                    {
-                        var theMethodSet = new TestMethod();
-                        theMethodSet.TestMethodSnip = currentSnip;
-                        theMethodSet.TestClasssFileName = current.FileName;
-                        theMethodSet.TestClass_Raw_FileContent_V1 = currentSnip;
-                        theMethodSet.TestClass_Raw_FileContent_V2 = parentSnip;
-                        theMethodSet.TestMethodName = theMethod.MethodSignature;
-                        theMethodSet.TestMethodName_Raw = theMethod.MethodSignature_Raw;
-                        theMethodSet.MethodCallsInside = format(theMethod.MethodCalls);
-                        theMethodSets.Add(theMethodSet);
+                        if (!currentSnip.Equals(parentSnip))
+                        {
+                            var theMethodSet = new TestMethod();
+                            theMethodSet.TestMethodSnip = currentSnip;
+                            theMethodSet.TestClasssFileName = current.FileName;
+                            theMethodSet.TestClass_Raw_FileContent_V1 = currentSnip;
+                            theMethodSet.TestClass_Raw_FileContent_V2 = parentSnip;
+                            theMethodSet.TestMethodName = theMethod.MethodSignature;
+                            theMethodSet.TestMethodName_Raw = theMethod.MethodSignature_Raw;
+                            theMethodSet.MethodCallsInside = format(theMethod.MethodCalls);
+                            theMethodSets.Add(theMethodSet);
+                        }
                     }
-                }
+                    else
+                    {
+                        //NewMethod
+                        string currentSnip = theMethod.CodeSnippet;
+                        string parentSnip = "Method Not Found";
+
+                        if (!currentSnip.Equals(parentSnip))
+                        {
+                            var theMethodSet = new TestMethod();
+                            theMethodSet.TestMethodSnip = currentSnip;
+                            theMethodSet.TestClasssFileName = current.FileName;
+                            theMethodSet.TestClass_Raw_FileContent_V1 = currentSnip;
+                            theMethodSet.TestClass_Raw_FileContent_V2 = parentSnip;
+                            theMethodSet.TestMethodName = theMethod.MethodSignature;
+                            theMethodSet.TestMethodName_Raw = theMethod.MethodSignature_Raw;
+                            theMethodSet.MethodCallsInside = format(theMethod.MethodCalls);
+                            theMethodSets.Add(theMethodSet);
+                        }
+                    }
             }
             return theMethodSets;
         }
@@ -250,25 +251,26 @@ namespace ConsoleApp
             List<TestMethod> theMethodSets = new List<TestMethod>();
             foreach (Method theMethod in current.MethodList)
             {
-                if (Parent.MethodList.Any(x => x.MethodSignature_Raw == theMethod.MethodSignature_Raw))
-                {
-                    //Existing One,LetsCheck if it is Changed
-                    string currentSnip = theMethod.CodeSnippet;
-                    string parentSnip = Parent.MethodList.FirstOrDefault(x => x.MethodSignature_Raw == theMethod.MethodSignature_Raw).CodeSnippet;
-
-                    if (!currentSnip.Equals(parentSnip))
+                if (theMethod.Annotations.Any(x => x.ToLower().Contains("test")))
+                    if (Parent.MethodList.Any(x => x.MethodSignature_Raw == theMethod.MethodSignature_Raw))
                     {
-                        var theMethodSet = new TestMethod();
-                        theMethodSet.TestMethodSnip = currentSnip;
-                        theMethodSet.TestClasssFileName = current.FileName;
-                        theMethodSet.TestClass_Raw_FileContent_V1 = currentSnip;
-                        theMethodSet.TestClass_Raw_FileContent_V2 = parentSnip;
-                        theMethodSet.TestMethodName = theMethod.MethodSignature;
-                        theMethodSet.TestMethodName_Raw = theMethod.MethodSignature_Raw;
-                        theMethodSet.MethodCallsInside = format(theMethod.MethodCalls);
-                        theMethodSets.Add(theMethodSet);
+                        //Existing One,LetsCheck if it is Changed
+                        string currentSnip = theMethod.CodeSnippet;
+                        string parentSnip = Parent.MethodList.FirstOrDefault(x => x.MethodSignature_Raw == theMethod.MethodSignature_Raw).CodeSnippet;
+
+                        if (!currentSnip.Equals(parentSnip))
+                        {
+                            var theMethodSet = new TestMethod();
+                            theMethodSet.TestMethodSnip = currentSnip;
+                            theMethodSet.TestClasssFileName = current.FileName;
+                            theMethodSet.TestClass_Raw_FileContent_V1 = currentSnip;
+                            theMethodSet.TestClass_Raw_FileContent_V2 = parentSnip;
+                            theMethodSet.TestMethodName = theMethod.MethodSignature;
+                            theMethodSet.TestMethodName_Raw = theMethod.MethodSignature_Raw;
+                            theMethodSet.MethodCallsInside = format(theMethod.MethodCalls);
+                            theMethodSets.Add(theMethodSet);
+                        }
                     }
-                }
             }
             return theMethodSets;
         }

@@ -8,4 +8,5 @@ public class Method {
     public String MethodSignature;
     public String CodeSnippet;
     public List<String> MethodCalls = new ArrayList<String>();
+    public List<String> Annotations = new ArrayList<String>();
 }

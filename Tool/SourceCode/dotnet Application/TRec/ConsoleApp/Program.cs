@@ -107,7 +107,7 @@ namespace ConsoleApp
                     CRUDManager.Save_Updated_RepoWareHouse();
                     new RepositoryAnalyzer().FindValidCommits();
                     CRUDManager.LoadParsedData(ref Cache.theCommits, MasterObject.CurrentRepoMetaData.RepoName);
-                    var thecom= Cache.theCommits.FirstOrDefault(x=>x.CommitSha== "6540edfdc0b710f05316bbe6b4f0eb140dca317c");
+                    var thecom = Cache.theCommits.FirstOrDefault(x => x.CommitSha == "6540edfdc0b710f05316bbe6b4f0eb140dca317c");
                     new BusinessLogic().CheckoutAndParseforJava();
 
                 }
@@ -143,6 +143,7 @@ namespace ConsoleApp
                     //Dictionary<string, DateTimeOffset> theCommitswithLinks_Dict = new Dictionary<string, DateTimeOffset>();
                     foreach (var theCommit in commits)
                     {
+
 
                         theCommit.ChangedFiles = theCommit.ChangedFiles.Distinct().ToList();
                         //Differentiating Prod class and Test Class
@@ -191,25 +192,24 @@ namespace ConsoleApp
 
                                         foreach (MethodSet theSrcMet in theSourceClass.MethodSets)
                                         {
-                                            if(theSrcMet.SourceMethodName.Contains("T "))
-                                            {
-
-                                            }
 
                                             foreach (var tstMethod in TestMethods)
                                             {
-                                                if (tstMethod.MethodCallsInside.Any(x=>AreMethodsEqual(x,theSrcMet.SourceMethodName)))
+                                                //if (tstMethod.TestClass_Raw_FileContent_V1.ToLower().Contains("@test"))
                                                 {
-                                                    theSrcMet.TestMethods.Add(tstMethod);
-
-                                                    if (!theSrcMet.TestMethods_Analytics.Any(x => x.TestMethodName == tstMethod.TestMethodName))
+                                                    if (tstMethod.MethodCallsInside.Any(x => AreMethodsEqual(x, theSrcMet.SourceMethodName)))
                                                     {
-                                                        var tstAna = new TestMethod_Analytic();
-                                                        tstAna.TestMethodName = tstMethod.TestMethodName_Raw;
-                                                        tstAna.TestFileName = tstCls;
-                                                        theSrcMet.TestMethods_Analytics.Add(tstAna);
+                                                        theSrcMet.TestMethods.Add(tstMethod);
+
+                                                        if (!theSrcMet.TestMethods_Analytics.Any(x => x.TestMethodName == tstMethod.TestMethodName))
+                                                        {
+                                                            var tstAna = new TestMethod_Analytic();
+                                                            tstAna.TestMethodName = tstMethod.TestMethodName_Raw;
+                                                            tstAna.TestFileName = tstCls;
+                                                            theSrcMet.TestMethods_Analytics.Add(tstAna);
+                                                        }
+                                                        theSrcMet.TestMethods_Analytics.First(x => x.TestMethodName == tstMethod.TestMethodName_Raw).Parsed_ChangedDateTime.Add(theCommit.ChangedDateTime);
                                                     }
-                                                    theSrcMet.TestMethods_Analytics.First(x => x.TestMethodName == tstMethod.TestMethodName_Raw).Parsed_ChangedDateTime.Add(theCommit.ChangedDateTime);
                                                 }
                                             }
                                         }
@@ -271,81 +271,81 @@ namespace ConsoleApp
 
                 //Now Show Recomendations
                 bool showsRecomen_Flag = false;
-                if(CommitForRecomendation != null)
-                foreach (var ChangedFile in CommitForRecomendation.ChangedFiles)
-                {
-                    if (!ChangedFile.ToLower().Contains("test"))
-                        foreach (SourceClass sourceClass in MasterObject.CurrentProject.theSourceClasses)
-                        {
-                            if (sourceClass != null && ChangedFile == sourceClass.SourceClassFileNameWithOutExtension)
+                if (CommitForRecomendation != null)
+                    foreach (var ChangedFile in CommitForRecomendation.ChangedFiles)
+                    {
+                        if (!ChangedFile.ToLower().Contains("test"))
+                            foreach (SourceClass sourceClass in MasterObject.CurrentProject.theSourceClasses)
                             {
-                                if (sourceClass.MethodSets.Any())
+                                if (sourceClass != null && ChangedFile == sourceClass.SourceClassFileNameWithOutExtension)
                                 {
-                                    var ParsedFile_current = CommitForRecomendation?.CommitAST?.theFiles.FirstOrDefault(x => x.FileName == ChangedFile) ?? null;
-
-                                    var ParsedFile_Parent = CommitForRecomendation.ParentCommit?.CommitAST?.theFiles.FirstOrDefault(x => x.FileName == ChangedFile) ?? null;
-                                    if (ParsedFile_Parent != null && ParsedFile_current != null)
+                                    if (sourceClass.MethodSets.Any())
                                     {
-                                        var Methods = new BusinessLogic().FindChanedMethosSets_Prod(ParsedFile_current, ParsedFile_Parent);
+                                        var ParsedFile_current = CommitForRecomendation?.CommitAST?.theFiles.FirstOrDefault(x => x.FileName == ChangedFile) ?? null;
 
-
-                                        showsRecomen_Flag = true;
-                                        
-                                        string className = sourceClass.SourceClassFileNameWithOutExtension;
-                                        Console.WriteLine($"--------- {className} ---------");
-                                        Console.WriteLine("-----------------------------------------");
-
-                                        // Console.WriteLine(className);
-                                        foreach (var theMethod in Methods)
-                                        // foreach (MethodSet methodSet in sourceClass.MethodSets)
+                                        var ParsedFile_Parent = CommitForRecomendation.ParentCommit?.CommitAST?.theFiles.FirstOrDefault(x => x.FileName == ChangedFile) ?? null;
+                                        if (ParsedFile_Parent != null && ParsedFile_current != null)
                                         {
-                                            var methodSet = sourceClass.MethodSets.FirstOrDefault(x => x.SourceMethodName == theMethod.SourceMethodName);
-                                            
-                                            string prodmethodname = theMethod.SourceMethodName_Raw;
-                                            string recomendations = "";
-                                            string all_Otherrecomendations = "";
-                                            if (methodSet!=null && methodSet.TestMethods.Any())
+                                            var Methods = new BusinessLogic().FindChanedMethosSets_Prod(ParsedFile_current, ParsedFile_Parent);
+
+
+                                            showsRecomen_Flag = true;
+
+                                            string className = sourceClass.SourceClassFileNameWithOutExtension;
+                                            Console.WriteLine($"--------- {className} ---------");
+                                            Console.WriteLine("-----------------------------------------");
+
+                                            // Console.WriteLine(className);
+                                            foreach (var theMethod in Methods)
+                                            // foreach (MethodSet methodSet in sourceClass.MethodSets)
                                             {
-                                                //if (!methodSet.SourceMethodV1Snip.ToLower().Contains("public"))
-                                                //    continue;
-                                                List<TestMethod_Analytic> theTestAna = new List<TestMethod_Analytic>();
+                                                var methodSet = sourceClass.MethodSets.FirstOrDefault(x => x.SourceMethodName == theMethod.SourceMethodName);
+
+                                                string prodmethodname = theMethod.SourceMethodName_Raw;
+                                                string recomendations = "";
+                                                string all_Otherrecomendations = "";
+                                                if (methodSet != null && methodSet.TestMethods.Any())
+                                                {
+                                                    //if (!methodSet.SourceMethodV1Snip.ToLower().Contains("public"))
+                                                    //    continue;
+                                                    List<TestMethod_Analytic> theTestAna = new List<TestMethod_Analytic>();
 
 
-                                                var filteredAndSorted = FilterAndSortByDate(methodSet.TestMethods_Analytics, CommitForRecomendation.ChangedDateTime);
+                                                    var filteredAndSorted = FilterAndSortByDate(methodSet.TestMethods_Analytics, CommitForRecomendation.ChangedDateTime);
 
-                                                var sortedAnalytics = filteredAndSorted
-                                                                        .Take(5)
-                                                                        .Select(item => item.TestMethodName)
-                                                                        .ToList();
-                                                if (sortedAnalytics.Any())
-                                                    recomendations = String.Join("\n", sortedAnalytics);
+                                                    var sortedAnalytics = filteredAndSorted
+                                                                            .Take(5)
+                                                                            .Select(item => item.TestMethodName)
+                                                                            .ToList();
+                                                    if (sortedAnalytics.Any())
+                                                        recomendations = String.Join("\n", sortedAnalytics);
+                                                    else
+                                                        recomendations = "We Could not find any Recomendations.";
+
+                                                    all_Otherrecomendations = String.Join("\n", methodSet.TestMethods_Analytics.Select(x => x.TestMethodName).ToList());
+
+                                                    prodmethodname = methodSet.SourceMethodName;
+
+                                                }
+                                                Console.WriteLine($"Method: {prodmethodname}");
+                                                Console.WriteLine("--------------------------------------------------------------------");
+                                                Console.WriteLine($"Recommended Tests:");
+                                                if (!String.IsNullOrEmpty(recomendations))
+                                                    Console.WriteLine(recomendations);
                                                 else
-                                                    recomendations = "We Could not find any Recomendations.";
-
-                                                all_Otherrecomendations = String.Join("\n", methodSet.TestMethods_Analytics.Select(x => x.TestMethodName).ToList());
-
-                                                prodmethodname = methodSet.SourceMethodName;
+                                                    Console.WriteLine("No Recomendations Found.");
+                                                Console.WriteLine();
+                                                Console.WriteLine();
 
                                             }
-                                            Console.WriteLine($"Method: {prodmethodname}");
-                                            Console.WriteLine("--------------------------------------------------------------------");
-                                            Console.WriteLine($"Recommended Tests:");
-                                            if (!String.IsNullOrEmpty(recomendations))
-                                                Console.WriteLine(recomendations);
-                                            else
-                                                Console.WriteLine("No Recomendations Found.");
-                                            Console.WriteLine();
-                                            Console.WriteLine();
 
                                         }
-                                       
+
                                     }
-
                                 }
-                            }
 
-                        }
-                }
+                            }
+                    }
                 else
                     Console.WriteLine("No Recomendations Found.");
                 Console.WriteLine();
@@ -356,7 +356,7 @@ namespace ConsoleApp
                 }
                 //string endtime = DateTime.Now.ToString();
                 //var v = Cache.theCommitsWithLinks;
-                // new Evaluation_JavaParser().Run();
+                //new Evaluation_JavaParser().Run();
                 //new Evaluation_BL().StartEvaluation();
 
                 while (true)

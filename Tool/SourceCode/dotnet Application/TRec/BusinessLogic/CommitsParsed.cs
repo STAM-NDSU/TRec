@@ -26,5 +26,6 @@ namespace BusinessLogic
         public string MethodSignature { get; set; }
         public string CodeSnippet { get; set; }
         public List<string> MethodCalls { get; set; }
+        public List<string> Annotations { get; set; }
     }
 }

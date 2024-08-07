@@ -168,6 +168,7 @@ namespace ConsoleApp
                     }
                 }
             }
+            
             var v =Cache.theCommitsWithLinks;
         }
         public void getLinksCount()

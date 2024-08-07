@@ -4,10 +4,10 @@ import com.github.javaparser.ast.CompilationUnit;
 import com.github.javaparser.ast.body.MethodDeclaration;
 import com.github.javaparser.ast.expr.MethodCallExpr;
 import com.github.javaparser.ast.visitor.VoidVisitorAdapter;
-import com.github.javaparser.symbolsolver.utils.SymbolSolverCollectionStrategy;
 import com.github.javaparser.utils.ProjectRoot;
 import com.github.javaparser.utils.SourceRoot;
 import com.google.gson.Gson;
+import com.github.javaparser.symbolsolver.utils.SymbolSolverCollectionStrategy;
 
 
 import java.io.File;
@@ -88,6 +88,10 @@ public static List<Commit> theCommits = new ArrayList<>();
                 //System.out.println("Main Method:" + dcl.getSignature() + " has the following resolved method calls: ");
                 //String filename = FileName;
                 Method theMethod = new Method();
+                for (var annotation : dcl.getAnnotations()) {
+                    theMethod.Annotations.add(annotation.getName().toString());
+                }
+                //theMethod.Annotations = Arrays.asList(dcl.getAnnotations().toArray(new String[0]));
                 theMethod.MethodSignature_Raw=dcl.getDeclarationAsString();
                 theMethod.MethodSignature = dcl.getSignature()+"";
 theMethod.CodeSnippet=dcl.toString();
