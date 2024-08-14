@@ -11,5 +11,6 @@ namespace ConsoleApp
     {
         public static List<CandidateCommit> theCommits = new List<CandidateCommit>();
         public static Dictionary<DateTimeOffset, string> theCommitsWithLinks = new Dictionary<DateTimeOffset, string>();
+        public static List<string> dummy = new List<string>();
     }
 }

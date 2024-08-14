@@ -203,7 +203,7 @@ namespace ConsoleApp
             List<TestMethod> theMethodSets = new List<TestMethod>();
             foreach (Method theMethod in current.MethodList)
             {
-                if (theMethod.Annotations.Any(x => x.ToLower().Contains("test")))
+                if (theMethod.Annotations.Any(x => x.ToLower().Contains("test")) || theMethod.MethodSignature.ToLower().Trim().StartsWith("test"))
                     if (Parent.MethodList.Any(x => x.MethodSignature_Raw == theMethod.MethodSignature_Raw))
                     {
                         //Existing One,LetsCheck if it is Changed
@@ -251,8 +251,10 @@ namespace ConsoleApp
             List<TestMethod> theMethodSets = new List<TestMethod>();
             foreach (Method theMethod in current.MethodList)
             {
-                if (theMethod.Annotations.Any(x => x.ToLower().Contains("test")))
-                    if (Parent.MethodList.Any(x => x.MethodSignature_Raw == theMethod.MethodSignature_Raw))
+
+                if (Parent.MethodList.Any(x => x.MethodSignature_Raw == theMethod.MethodSignature_Raw))
+                {
+                    if (theMethod.Annotations.Any(x => x.ToLower().Contains("test")) || theMethod.MethodSignature.ToLower().Trim().StartsWith("test"))
                     {
                         //Existing One,LetsCheck if it is Changed
                         string currentSnip = theMethod.CodeSnippet;
@@ -271,6 +273,14 @@ namespace ConsoleApp
                             theMethodSets.Add(theMethodSet);
                         }
                     }
+                    else
+                    {
+                        string currentSnip = theMethod.CodeSnippet;
+                        string parentSnip = Parent.MethodList.FirstOrDefault(x => x.MethodSignature_Raw == theMethod.MethodSignature_Raw).CodeSnippet;
+                        if (!currentSnip.Equals(parentSnip))
+                            Cache.dummy.Add(parentSnip);
+                    }
+                }
             }
             return theMethodSets;
         }
